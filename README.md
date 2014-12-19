@@ -6,7 +6,7 @@ A client API in ASP.NET and C# that can be used to interact with a-webshop. You 
 This client API is available as a NuGet package: <a href="https://www.nuget.org/packages/AnnytabWebshopClientAPI/">a-webshop-client-api (NuGet Gallery)</a>
 
 <b>A quick start guide</b><br />
-Create an administrator in a-webshop with a API role, there is three different roles (API Full Trust, API Medium Trust, API Minimal Trust).
+Create an administrator in a-webshop with a API role, there is three different roles (API Full Trust, API Medium Trust, API Minimal Trust). The namespace for the classes in the API is Annytab.WebshopClientAPI.
 
 <i>Example: Add a campaign</i>
 <pre>
