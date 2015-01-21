@@ -35,6 +35,7 @@ namespace Annytab.WebshopClientAPI
         public string facebook_app_secret;
         public string google_app_id;
         public string google_app_secret;
+        public bool noindex;
 
         #endregion
 
@@ -64,6 +65,7 @@ namespace Annytab.WebshopClientAPI
             this.facebook_app_secret = "";
             this.google_app_id = "";
             this.google_app_secret = "";
+            this.noindex = false;
 
         } // End of the constructor
 

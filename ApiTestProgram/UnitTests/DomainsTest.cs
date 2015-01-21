@@ -35,6 +35,7 @@ namespace ApiTestProgram
             domain.facebook_app_secret = "FB APP SECRET";
             domain.google_app_id = "GOOGLE APP ID";
             domain.google_app_secret = "GOOGLE APP SECRET";
+            domain.noindex = false;
 
             // Add the post
             ResponseMessage response = await Domain.Add(connection, domain);
@@ -66,13 +67,14 @@ namespace ApiTestProgram
             domain.company_id = 1;
             domain.default_display_view = 1;
             domain.mobile_display_view = 2;
-            domain.custom_theme_id = 1;
+            domain.custom_theme_id = 0;
             domain.prices_includes_vat = true;
             domain.analytics_tracking_id = "Analytics tracking id UPP";
             domain.facebook_app_id = "FB APP ID UPP";
             domain.facebook_app_secret = "FB APP SECRET UPP";
             domain.google_app_id = "GOOGLE APP ID UPP";
             domain.google_app_secret = "GOOGLE APP SECRET UPP";
+            domain.noindex = true;
 
             // Add the post
             ResponseMessage response = await Domain.Update(connection, domain);
