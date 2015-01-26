@@ -15,7 +15,6 @@ namespace Annytab.WebshopClientAPI
     /// </summary>
     public class Company
     {
-
         #region Variables
 
         public Int32 id;

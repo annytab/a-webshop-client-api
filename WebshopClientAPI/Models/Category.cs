@@ -18,16 +18,16 @@ namespace Annytab.WebshopClientAPI
         #region Variables
 
         public Int32 id;
-        public string title;
         public Int32 parent_category_id;
-        public string page_name;
+        public string meta_robots;
+        public DateTime date_added;
+        public Int32 page_views;
+        public string title;
         public string main_content;
         public string meta_description;
         public string meta_keywords;
-        public string meta_robots;
+        public string page_name;
         public bool use_local_images;
-        public DateTime date_added;
-        public Int32 page_views;
         public bool inactive;
 
         #endregion
@@ -41,16 +41,16 @@ namespace Annytab.WebshopClientAPI
         {
             // Set values for instance variables
             this.id = 0;
-            this.title = "";
             this.parent_category_id = 0;
-            this.page_name = "";
+            this.meta_robots = "";
+            this.date_added = DateTime.Now;
+            this.page_views = 0;
+            this.title = "";
             this.main_content = "";
             this.meta_description = "";
             this.meta_keywords = "";
-            this.meta_robots = "";
+            this.page_name = "";
             this.use_local_images = false;
-            this.date_added = DateTime.Now;
-            this.page_views = 0;
             this.inactive = false;
 
         } // End of the constructor

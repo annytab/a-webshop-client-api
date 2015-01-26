@@ -18,14 +18,14 @@ namespace Annytab.WebshopClientAPI
         #region Variables
 
         public Int32 id;
+        public byte connected_to_page;
+        public string meta_robots;
         public string link_name;
         public string title;
         public string main_content;
         public string meta_description;
         public string meta_keywords;
-        public string meta_robots;
         public string page_name;
-        public byte connected_to_page;
         public bool inactive;
 
         #endregion
@@ -39,14 +39,14 @@ namespace Annytab.WebshopClientAPI
         {
             // Set values for instance variables
             this.id = 0;
+            this.connected_to_page = 0;
+            this.meta_robots = "";
             this.link_name = "";
             this.title = "";
             this.main_content = "";
             this.meta_description = "";
             this.meta_keywords = "";
-            this.meta_robots = "";
             this.page_name = "";
-            this.connected_to_page = 0;
             this.inactive = false;
 
         } // End of the constructor

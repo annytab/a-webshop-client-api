@@ -15,7 +15,6 @@ namespace Annytab.WebshopClientAPI
     /// </summary>
     public class OrderRow
     {
-
         #region Variables
 
         public Int32 order_id;

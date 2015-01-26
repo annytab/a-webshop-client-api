@@ -15,7 +15,6 @@ namespace Annytab.WebshopClientAPI
     /// </summary>
     public class Currency
     {
-
         #region Variables
 
         public string currency_code;

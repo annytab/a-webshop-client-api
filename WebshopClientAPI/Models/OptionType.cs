@@ -17,10 +17,10 @@ namespace Annytab.WebshopClientAPI
     {
         #region Variables
 
-        public int id;
+        public Int32 id;
         public string google_name;
         public string title;
-        public int option_count;
+        public Int32 option_count;
 
         #endregion
 

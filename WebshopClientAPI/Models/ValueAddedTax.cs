@@ -31,7 +31,7 @@ namespace Annytab.WebshopClientAPI
         {
             // Set values for instance variables
             this.id = 0;
-            this.value = 0.00M;
+            this.value = 0.00000M;
 
         } // End of the constructor
 

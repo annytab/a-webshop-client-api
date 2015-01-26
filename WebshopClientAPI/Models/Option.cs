@@ -20,7 +20,7 @@ namespace Annytab.WebshopClientAPI
         public Int32 id;
         public string title;
         public string product_code_suffix;
-        public Int32 sort_order;
+        public Int16 sort_order;
         public Int32 option_type_id;
 
         #endregion

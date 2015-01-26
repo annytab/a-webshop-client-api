@@ -17,7 +17,7 @@ namespace Annytab.WebshopClientAPI
     {
         #region Variables
 
-        public int id;
+        public Int32 id;
         public string name;
         public string language_code;
         public string country_code;

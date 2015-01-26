@@ -39,7 +39,7 @@ namespace Annytab.WebshopClientAPI
             this.product_id = 0;
             this.customer_id = 0;
             this.language_id = 0;
-            this.review_date = DateTime.MinValue;
+            this.review_date = new DateTime(2000, 1, 1);
             this.review_text = "";
             this.rating = 0;
 
