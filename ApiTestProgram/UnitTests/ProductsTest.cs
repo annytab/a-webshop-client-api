@@ -41,6 +41,7 @@ namespace ApiTestProgram
             product.adult_only = false;
             product.unit_pricing_measure = 0.55M;
             product.unit_pricing_base_measure = 10;
+            product.comparison_unit_id = 0;
             product.energy_efficiency_class = "A+";
             product.downloadable_files = true;
             product.date_added = new DateTime(2013, 1, 1);
@@ -107,6 +108,7 @@ namespace ApiTestProgram
             product.adult_only = true;
             product.unit_pricing_measure = 0.41M;
             product.unit_pricing_base_measure = 2;
+            product.comparison_unit_id = 2;
             product.energy_efficiency_class = "energy class";
             product.downloadable_files = true;
             product.date_added = new DateTime(2014, 2, 2);
@@ -169,6 +171,7 @@ namespace ApiTestProgram
             product.adult_only = true;
             product.unit_pricing_measure = 0.55M;
             product.unit_pricing_base_measure = 1;
+            product.comparison_unit_id = 3;
             product.energy_efficiency_class = "A+";
             product.downloadable_files = false;
             product.date_added = new DateTime(2014, 2, 2);
