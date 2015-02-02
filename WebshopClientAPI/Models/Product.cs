@@ -40,6 +40,7 @@ namespace Annytab.WebshopClientAPI
         public bool adult_only;
         public decimal unit_pricing_measure;
         public Int32 unit_pricing_base_measure;
+        public Int32 comparison_unit_id;
         public string energy_efficiency_class;
         public bool downloadable_files;
         public DateTime date_added;
@@ -97,6 +98,7 @@ namespace Annytab.WebshopClientAPI
             this.adult_only = false;
             this.unit_pricing_measure = 0;
             this.unit_pricing_base_measure = 0;
+            this.comparison_unit_id = 0;
             this.energy_efficiency_class = "";
             this.downloadable_files = false;
             this.date_added = DateTime.Now;
