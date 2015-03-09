@@ -65,6 +65,7 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CustomTheme.cs" />
     <Compile Include="Models\CustomThemeTemplate.cs" />
+    <Compile Include="Models\DiscountCode.cs" />
     <Compile Include="Networking\CustomerConnection.cs" />
     <Compile Include="Networking\ClientConnection.cs" />
     <Compile Include="Models\Company.cs" />

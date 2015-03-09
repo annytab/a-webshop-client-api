@@ -25,6 +25,7 @@ namespace ApiTestProgram
             campaign.image_name = "image name SV";
             campaign.link_url = "link url SV";
             campaign.inactive = false;
+            campaign.click_count = 5;
             
             // Add the post
             ResponseMessage response = await Campaign.Add(connection, campaign);
@@ -45,13 +46,14 @@ namespace ApiTestProgram
 
             // Create a new post
             Campaign campaign = new Campaign();
-            campaign.id = 8;
+            campaign.id = 9;
             campaign.language_id = 1;
             campaign.name = "Name SV UPP";
             campaign.category_name = "category name SV UPP";
             campaign.image_name = "image name SV UPP";
             campaign.link_url = "link url SV UPP";
             campaign.inactive = true;
+            campaign.click_count = 10;
 
             // Add the post
             ResponseMessage response = await Campaign.Update(connection, campaign);
@@ -71,7 +73,7 @@ namespace ApiTestProgram
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
             // Get the count
-            Int32 count = await Campaign.GetCountBySearch(connection, "");
+            Int32 count = await Campaign.GetCountBySearch(connection, "1");
 
             // Dispose of the connection
             connection.Dispose();
@@ -88,7 +90,7 @@ namespace ApiTestProgram
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
             // Get posts
-            List<Campaign> posts = await Campaign.GetBySearch(connection, "b a", 10, 1, "id", "DESC");
+            List<Campaign> posts = await Campaign.GetBySearch(connection, "1", 10, 1, "id", "DESC");
 
             // Dispose of the connection
             connection.Dispose();
@@ -122,7 +124,7 @@ namespace ApiTestProgram
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
             // Get posts
-            Campaign post = await Campaign.GetById(connection, 1);
+            Campaign post = await Campaign.GetById(connection, 9);
 
             // Dispose of the connection
             connection.Dispose();

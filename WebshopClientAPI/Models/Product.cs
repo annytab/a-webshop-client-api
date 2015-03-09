@@ -44,6 +44,7 @@ namespace Annytab.WebshopClientAPI
         public string energy_efficiency_class;
         public bool downloadable_files;
         public DateTime date_added;
+        public decimal discount;
         public string title;
         public string main_content;
         public string extra_content;
@@ -102,6 +103,7 @@ namespace Annytab.WebshopClientAPI
             this.energy_efficiency_class = "";
             this.downloadable_files = false;
             this.date_added = DateTime.Now;
+            this.discount = 0;
             this.title = "";
             this.main_content = "";
             this.extra_content = "";

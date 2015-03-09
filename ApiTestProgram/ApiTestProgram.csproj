@@ -69,6 +69,7 @@
     <Compile Include="UnitTests\CategoriesTest.cs" />
     <Compile Include="UnitTests\CompaniesTest.cs" />
     <Compile Include="UnitTests\CountriesTest.cs" />
+    <Compile Include="UnitTests\DiscountCodesTest.cs" />
     <Compile Include="UnitTests\CurrenciesTest.cs" />
     <Compile Include="UnitTests\CustomDesignTest.cs" />
     <Compile Include="UnitTests\CustomersTest.cs" />

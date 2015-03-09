@@ -41,10 +41,11 @@ namespace ApiTestProgram
             product.adult_only = false;
             product.unit_pricing_measure = 0.55M;
             product.unit_pricing_base_measure = 10;
-            product.comparison_unit_id = 0;
+            product.comparison_unit_id = 3;
             product.energy_efficiency_class = "A+";
             product.downloadable_files = true;
             product.date_added = new DateTime(2013, 1, 1);
+            product.discount = 0.300M;
             product.title = "Title SE";
             product.main_content = "Main Content SE";
             product.extra_content = "Extra content SE";
@@ -85,7 +86,7 @@ namespace ApiTestProgram
 
             // Create a new post
             Product product = new Product();
-            product.id = 9;
+            product.id = 30;
             product.product_code = "Product code UPP";
             product.manufacturer_code = "Manufacturer code UPP";
             product.gtin = "Gtin UPP";
@@ -112,6 +113,7 @@ namespace ApiTestProgram
             product.energy_efficiency_class = "energy class";
             product.downloadable_files = true;
             product.date_added = new DateTime(2014, 2, 2);
+            product.discount = 0.888888888M;
             product.title = "Title UPP";
             product.main_content = "Main Content UPP";
             product.extra_content = "Extra content UPP";
@@ -152,7 +154,7 @@ namespace ApiTestProgram
 
             // Create a new post
             Product product = new Product();
-            product.id = 8; //8
+            product.id = 30; //8
             product.product_code = "Product code US";
             product.manufacturer_code = "Manufacturer code US";
             product.gtin = "Gtin US";
@@ -175,6 +177,7 @@ namespace ApiTestProgram
             product.energy_efficiency_class = "A+";
             product.downloadable_files = false;
             product.date_added = new DateTime(2014, 2, 2);
+            product.discount = 0.000M;
             product.title = "Title US";
             product.main_content = "Main Content US";
             product.extra_content = "Extra content US";
@@ -214,7 +217,7 @@ namespace ApiTestProgram
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
             // Get the count
-            Int32 count = await Product.GetCountBySearch(connection, "", 1);
+            Int32 count = await Product.GetCountBySearch(connection, "1 bauer", 1);
 
             // Dispose of the connection
             connection.Dispose();
@@ -231,7 +234,7 @@ namespace ApiTestProgram
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
             // Get posts
-            List<Product> posts = await Product.GetBySearch(connection, "", 1, 10, 1, "id", "DESC");
+            List<Product> posts = await Product.GetBySearch(connection, "1 bauer", 1, 10, 1, "id", "DESC");
 
             // Dispose of the connection
             connection.Dispose();
@@ -248,7 +251,7 @@ namespace ApiTestProgram
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
             // Get posts
-            Product post = await Product.GetById(connection, 8, 2);
+            Product post = await Product.GetById(connection, 30, 1);
 
             // Dispose of the connection
             connection.Dispose();
@@ -265,7 +268,7 @@ namespace ApiTestProgram
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
             // Get posts
-            List<Product> products = await Product.GetAll(connection, 1, "id", "ASC");
+            List<Product> products = await Product.GetAll(connection, 2, "id", "ASC");
 
             // Dispose of the connection
             connection.Dispose();
@@ -282,7 +285,7 @@ namespace ApiTestProgram
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
             // Get posts
-            List<Product> products = await Product.GetAllActive(connection, 1, "id", "ASC");
+            List<Product> products = await Product.GetAllActive(connection, 2, "id", "ASC");
 
             // Dispose of the connection
             connection.Dispose();
@@ -316,7 +319,7 @@ namespace ApiTestProgram
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
             // Get posts
-            List<Product> products = await Product.GetByCategoryId(connection, 19, 1, "id", "ASC");
+            List<Product> products = await Product.GetByCategoryId(connection, 2, 1, "id", "ASC");
 
             // Dispose of the connection
             connection.Dispose();

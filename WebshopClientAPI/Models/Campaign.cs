@@ -24,6 +24,7 @@ namespace Annytab.WebshopClientAPI
         public string image_name;
         public string link_url;
         public bool inactive;
+        public Int32 click_count;
 
         #endregion
 
@@ -42,6 +43,7 @@ namespace Annytab.WebshopClientAPI
             this.image_name = "";
             this.link_url = "";
             this.inactive = false;
+            this.click_count = 0;
 
         } // End of the constructor
 

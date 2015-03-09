@@ -56,6 +56,7 @@ namespace ApiTestProgram
             order.exported_to_erp = false;
             order.order_status = "Order status";
             order.desired_date_of_delivery = new DateTime(2015, 2, 3);
+            order.discount_code = "TEST";
 
             // Add the post
             ResponseMessage response = await Order.Add(connection, order);
@@ -76,7 +77,7 @@ namespace ApiTestProgram
 
             // Create a new post
             Order order = new Order();
-            order.id = 36; // 28
+            order.id = 7;
             order.document_type = 1;
             order.order_date = DateTime.Now;
             order.company_id = 1;
@@ -115,6 +116,7 @@ namespace ApiTestProgram
             order.exported_to_erp = true;
             order.order_status = "Order status UPP";
             order.desired_date_of_delivery = new DateTime(2019, 3, 30);
+            order.discount_code = "TEST UPP";
 
             // Add the post
             ResponseMessage response = await Order.Update(connection, order);
@@ -162,38 +164,72 @@ namespace ApiTestProgram
         } // End of the TestGetCountBySearch method
 
         [TestMethod]
-        public async Task TestGetBySearch()
+        public async Task TestGetCountByCustomerId()
         {
             // Create the connection
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
-            // Get posts
-            List<Order> posts = await Order.GetBySearch(connection, "", 10, 1, "id", "DESC");
+            // Get the count
+            Int32 count = await Order.GetCountByCustomerId(connection, 1);
 
             // Dispose of the connection
             connection.Dispose();
 
             // Test the method call
-            Assert.AreNotEqual(0, posts.Count);
+            Assert.AreNotEqual(0, count);
 
-        } // End of the TestGetBySearch method
+        } // End of the TestGetCountByCustomerId method
 
         [TestMethod]
-        public async Task TestGetAll()
+        public async Task TestGetCountByDiscountCode()
         {
             // Create the connection
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
-            // Get posts
-            List<Order> orders = await Order.GetAll(connection, "id", "ASC");
+            // Get the count
+            Int32 count = await Order.GetCountByDiscountCode(connection, "XXXSSS");
 
             // Dispose of the connection
             connection.Dispose();
 
             // Test the method call
-            Assert.AreNotEqual(0, orders.Count);
+            Assert.AreNotEqual(0, count);
 
-        } // End of the TestGetAll method
+        } // End of the TestGetCountByDiscountCode method
+
+        [TestMethod]
+        public async Task TestGetById()
+        {
+            // Create the connection
+            ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
+
+            // Get posts
+            Order post = await Order.GetById(connection, 7);
+
+            // Dispose of the connection
+            connection.Dispose();
+
+            // Test the method call
+            Assert.AreNotEqual(null, post);
+
+        } // End of the TestGetById method
+
+        [TestMethod]
+        public async Task TestGetByDiscountCodeAndCustomer()
+        {
+            // Create the connection
+            ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
+
+            // Get posts
+            Order post = await Order.GetByDiscountCodeAndCustomer(connection, "XXXSSS", 1);
+
+            // Dispose of the connection
+            connection.Dispose();
+
+            // Test the method call
+            Assert.AreNotEqual(null, post);
+
+        } // End of the TestGetByDiscountCodeAndCustomer method
 
         [TestMethod]
         public async Task TestGetNotExported()
@@ -230,21 +266,72 @@ namespace ApiTestProgram
         } // End of the TestGetNotExported method
 
         [TestMethod]
-        public async Task TestGetById()
+        public async Task TestGetAll()
         {
             // Create the connection
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
             // Get posts
-            Order post = await Order.GetById(connection, 26);
+            List<Order> orders = await Order.GetAll(connection, "id", "ASC");
 
             // Dispose of the connection
             connection.Dispose();
 
             // Test the method call
-            Assert.AreNotEqual(null, post);
+            Assert.AreNotEqual(0, orders.Count);
 
-        } // End of the TestGetById method
+        } // End of the TestGetAll method
+
+        [TestMethod]
+        public async Task TestGetBySearch()
+        {
+            // Create the connection
+            ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
+
+            // Get posts
+            List<Order> posts = await Order.GetBySearch(connection, "", 10, 1, "id", "DESC");
+
+            // Dispose of the connection
+            connection.Dispose();
+
+            // Test the method call
+            Assert.AreNotEqual(0, posts.Count);
+
+        } // End of the TestGetBySearch method
+
+        [TestMethod]
+        public async Task TestGetByCustomerId()
+        {
+            // Create the connection
+            ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
+
+            // Get posts
+            List<Order> posts = await Order.GetByCustomerId(connection, 1, 10, 1, "id", "DESC");
+
+            // Dispose of the connection
+            connection.Dispose();
+
+            // Test the method call
+            Assert.AreNotEqual(0, posts.Count);
+
+        } // End of the TestGetByCustomerId method
+
+        [TestMethod]
+        public async Task TestGetByDiscountCode()
+        {
+            // Create the connection
+            ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
+
+            // Get posts
+            List<Order> posts = await Order.GetByDiscountCode(connection, "XXXSSS", 10, 1, "id", "DESC");
+
+            // Dispose of the connection
+            connection.Dispose();
+
+            // Test the method call
+            Assert.AreNotEqual(0, posts.Count);
+
+        } // End of the TestGetByDiscountCode method
 
         [TestMethod]
         public async Task TestDeletePost()

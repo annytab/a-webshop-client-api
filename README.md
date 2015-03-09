@@ -1,7 +1,10 @@
-a-webshop-client-api
+a-webshop-client-api (A Name Not Yet Taken AB)
 ====================
 
-A client API in ASP.NET and C# that can be used to interact with a-webshop. You can use this client API to create applications in ASP.NET that interacts with a-webshop. The documentation for the API is under development, more information will come later.
+A client API in ASP.NET and C# that can be used to interact with a-webshop. You can use this client API to create applications in ASP.NET that interacts with a-webshop.
+
+Documentation (English): <a href="http://www.a-webshop.com/home/category/web-api-reference">Web API reference</a>
+Documentation (Swedish): <a href="http://www.a-webshop.se/home/category/webb-api-referens">Webb-API-referens</a>
 
 This client API is available as a NuGet package: <a href="https://www.nuget.org/packages/AnnytabWebshopClientAPI/">a-webshop-client-api (NuGet Gallery)</a>
 
@@ -22,6 +25,7 @@ campaign.category_name = &quot;category name SV&quot;;
 campaign.image_name = &quot;image name SV&quot;;
 campaign.link_url = &quot;link url SV&quot;;
 campaign.inactive = false;
+campaign.click_count = 0;
 
 // Add the post
 ResponseMessage response = await Campaign.Add(connection, campaign);

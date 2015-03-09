@@ -56,6 +56,7 @@ namespace Annytab.WebshopClientAPI
         public bool exported_to_erp;
         public string order_status;
         public DateTime desired_date_of_delivery;
+        public string discount_code;
 
         #endregion
 
@@ -106,6 +107,7 @@ namespace Annytab.WebshopClientAPI
             this.exported_to_erp = false;
             this.order_status = "";
             this.desired_date_of_delivery = DateTime.Now;
+            this.discount_code = "";
 
         } // End of the constructor
 
@@ -203,6 +205,56 @@ namespace Annytab.WebshopClientAPI
 
         } // End of the GetCountBySearch method
 
+        /// <summary>
+        /// Get the count of posts by customer id
+        /// </summary>
+        /// <param name="cn">A reference to a client connection</param>
+        /// <param name="customerId">The id of a customer</param>
+        /// <returns>The count of posts as an int</returns>
+        public async static Task<Int32> GetCountByCustomerId(ClientConnection cn, Int32 customerId)
+        {
+            // Create the integer to return
+            Int32 count = 0;
+
+            // Get the post
+            HttpResponseMessage response = await cn.GetAsync("/api/orders/get_count_by_customer_id/" + customerId.ToString());
+
+            // Make sure that the response is successful
+            if (response.IsSuccessStatusCode)
+            {
+                count = await response.Content.ReadAsAsync<Int32>();
+            }
+
+            // Return the count
+            return count;
+
+        } // End of the GetCountByCustomerId method
+
+        /// <summary>
+        /// Get the count of posts by discount code
+        /// </summary>
+        /// <param name="cn">A reference to a client connection</param>
+        /// <param name="discountCodeId">The id of a discount code</param>
+        /// <returns>The count of posts as an int</returns>
+        public async static Task<Int32> GetCountByDiscountCode(ClientConnection cn, string discountCodeId)
+        {
+            // Create the integer to return
+            Int32 count = 0;
+
+            // Get the post
+            HttpResponseMessage response = await cn.GetAsync("/api/orders/get_count_by_discount_code/" + discountCodeId);
+
+            // Make sure that the response is successful
+            if (response.IsSuccessStatusCode)
+            {
+                count = await response.Content.ReadAsAsync<Int32>();
+            }
+
+            // Return the count
+            return count;
+
+        } // End of the GetCountByDiscountCode method
+
         #endregion
 
         #region Get methods
@@ -231,6 +283,31 @@ namespace Annytab.WebshopClientAPI
             return post;
 
         } // End of the GetById method
+
+        /// <summary>
+        /// Get one order by discount code and customer id
+        /// </summary>
+        /// <param name="cn">A reference to a client connection</param>
+        /// <param name="discountCodeId">The id of a discount code</param>
+        /// <returns>A reference to a post, null if nothing is found</returns>
+        public async static Task<Order> GetByDiscountCodeAndCustomer(ClientConnection cn, string discountCodeId, Int32 customerId)
+        {
+            // Create the post to return
+            Order post = null;
+
+            // Get the post
+            HttpResponseMessage response = await cn.GetAsync("/api/orders/get_by_discount_code_and_customer/" + discountCodeId + "?customerId=" + customerId.ToString());
+
+            // Make sure that the response is successful
+            if (response.IsSuccessStatusCode)
+            {
+                post = await response.Content.ReadAsAsync<Order>();
+            }
+
+            // Return the post
+            return post;
+
+        } // End of the GetByDiscountCodeAndCustomer method
 
         /// <summary>
         /// Get not exported orders
@@ -341,6 +418,68 @@ namespace Annytab.WebshopClientAPI
             return posts;
 
         } // End of the GetBySearch method
+
+        /// <summary>
+        /// Get posts by a customer id
+        /// </summary>
+        /// <param name="cn">A reference to a client connection</param>
+        /// <param name="customerId">The id of a customer</param>
+        /// <param name="pageSize">The number of posts to get on one page</param>
+        /// <param name="pageNumber">The page number</param>
+        /// <param name="sortField">The field to sort on</param>
+        /// <param name="sortOrder">The sort order, ASC or DESC</param>
+        /// <returns>A list with posts</returns>
+        public async static Task<List<Order>> GetByCustomerId(ClientConnection cn, Int32 customerId, Int32 pageSize, Int32 pageNumber,
+            string sortField, string sortOrder)
+        {
+            // Create the list to return
+            List<Order> posts = new List<Order>();
+
+            // Get all posts
+            HttpResponseMessage response = await cn.GetAsync("/api/orders/get_by_customer_id/" + customerId.ToString() + "?pageSize="
+                + pageSize + "&pageNumber=" + pageNumber + "&sortField=" + sortField + "&sortOrder=" + sortOrder);
+
+            // Make sure that the response is successful
+            if (response.IsSuccessStatusCode)
+            {
+                posts = await response.Content.ReadAsAsync<List<Order>>();
+            }
+
+            // Return the list
+            return posts;
+
+        } // End of the GetByCustomerId method
+
+        /// <summary>
+        /// Get posts by a discount code
+        /// </summary>
+        /// <param name="cn">A reference to a client connection</param>
+        /// <param name="discountCodeId">The id of a discount code</param>
+        /// <param name="pageSize">The number of posts to get on one page</param>
+        /// <param name="pageNumber">The page number</param>
+        /// <param name="sortField">The field to sort on</param>
+        /// <param name="sortOrder">The sort order, ASC or DESC</param>
+        /// <returns>A list with posts</returns>
+        public async static Task<List<Order>> GetByDiscountCode(ClientConnection cn, string discountCodeId, Int32 pageSize, Int32 pageNumber,
+            string sortField, string sortOrder)
+        {
+            // Create the list to return
+            List<Order> posts = new List<Order>();
+
+            // Get all posts
+            HttpResponseMessage response = await cn.GetAsync("/api/orders/get_by_discount_code/" + discountCodeId + "?pageSize="
+                + pageSize + "&pageNumber=" + pageNumber + "&sortField=" + sortField + "&sortOrder=" + sortOrder);
+
+            // Make sure that the response is successful
+            if (response.IsSuccessStatusCode)
+            {
+                posts = await response.Content.ReadAsAsync<List<Order>>();
+            }
+
+            // Return the list
+            return posts;
+
+        } // End of the GetByCustomerId method
 
         #endregion
 
