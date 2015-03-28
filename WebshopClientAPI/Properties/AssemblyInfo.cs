@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Annytab Webshop Client API")]
 [assembly: AssemblyDescription("A client API for a-webshop (AnnytabWebshop).")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("A Name Not Yet Taken AB")]
 [assembly: AssemblyProduct("Annytab Webshop Client API")]
 [assembly: AssemblyCopyright("Copyright © 2014")]
 [assembly: AssemblyTrademark("")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.4.0")]
-[assembly: AssemblyFileVersion("1.0.4.0")]
+[assembly: AssemblyVersion("1.0.5.0")]
+[assembly: AssemblyFileVersion("1.0.5.0")]

@@ -83,7 +83,7 @@ namespace ApiTestProgram
             order.company_id = 1;
             order.country_code = "SU";
             order.language_code = "VU";
-            order.currency_code = "SUK";
+            order.currency_code = "USD";
             order.conversion_rate = 1.8M;
             order.customer_id = 2;
             order.customer_type = 1;

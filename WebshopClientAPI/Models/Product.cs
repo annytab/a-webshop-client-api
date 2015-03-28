@@ -422,30 +422,6 @@ namespace Annytab.WebshopClientAPI
 
         } // End of the GetBySearch method
 
-        #endregion
-
-        #region Delete methods
-
-        /// <summary>
-        /// Delete a product, set the language id to 0 if you want to delete the master post and all the connected posts
-        /// </summary>
-        /// <param name="cn">A reference to the client connection</param>
-        /// <param name="id">The id</param>
-        /// <param name="languageId">The language id</param>
-        /// <returns>A response message</returns>
-        public async static Task<ResponseMessage> Delete(ClientConnection cn, Int32 id, Int32 languageId)
-        {
-            // Delete the post
-            HttpResponseMessage response = await cn.DeleteAsync("/api/products/delete/" + id.ToString() + "?languageId=" + languageId.ToString());
-
-            // Create the response message
-            ResponseMessage message = new ResponseMessage((Int32)response.StatusCode, response.IsSuccessStatusCode, response.ReasonPhrase, await response.Content.ReadAsStringAsync());
-
-            // Return the response message
-            return message;
-
-        } // End of the Delete method
-
         /// <summary>
         /// Get product images by id
         /// </summary>
@@ -496,6 +472,30 @@ namespace Annytab.WebshopClientAPI
             return posts;
 
         } // End of the GetAllImages method
+
+        #endregion
+
+        #region Delete methods
+
+        /// <summary>
+        /// Delete a product, set the language id to 0 if you want to delete the master post and all the connected posts
+        /// </summary>
+        /// <param name="cn">A reference to the client connection</param>
+        /// <param name="id">The id</param>
+        /// <param name="languageId">The language id</param>
+        /// <returns>A response message</returns>
+        public async static Task<ResponseMessage> Delete(ClientConnection cn, Int32 id, Int32 languageId)
+        {
+            // Delete the post
+            HttpResponseMessage response = await cn.DeleteAsync("/api/products/delete/" + id.ToString() + "?languageId=" + languageId.ToString());
+
+            // Create the response message
+            ResponseMessage message = new ResponseMessage((Int32)response.StatusCode, response.IsSuccessStatusCode, response.ReasonPhrase, await response.Content.ReadAsStringAsync());
+
+            // Return the response message
+            return message;
+
+        } // End of the Delete method
 
         #endregion
 
@@ -639,6 +639,42 @@ namespace Annytab.WebshopClientAPI
             return message;
 
         } // End of the UploadOtherImages method
+
+        /// <summary>
+        /// Upload spin images
+        /// </summary>
+        /// <param name="cn">A reference to the client connection</param>
+        /// <param name="images">A list with image file paths</param>
+        /// <returns>A response message</returns>
+        public async static Task<ResponseMessage> UploadSpinImages(ClientConnection cn, Int32 id, Int32 languageId, List<string> images)
+        {
+            // Create the message and the content
+            HttpRequestMessage requestMessage = new HttpRequestMessage();
+            MultipartFormDataContent content = new MultipartFormDataContent();
+
+            // Loop the list of image urls
+            foreach (string file in images)
+            {
+                FileStream filestream = new FileStream(file, FileMode.Open);
+                string fileName = System.IO.Path.GetFileName(file);
+                content.Add(new StreamContent(filestream), "file", fileName);
+            }
+
+            // Set data for the message
+            requestMessage.Method = HttpMethod.Post;
+            requestMessage.Content = content;
+            requestMessage.RequestUri = new Uri(cn.BaseAddress + "/api/products/upload_spin_images/" + id.ToString() + "?languageId=" + languageId.ToString());
+
+            // Send the message
+            HttpResponseMessage response = await cn.SendAsync(requestMessage);
+
+            // Create the response message
+            ResponseMessage message = new ResponseMessage((Int32)response.StatusCode, response.IsSuccessStatusCode, response.ReasonPhrase, await response.Content.ReadAsStringAsync());
+
+            // Return the response message
+            return message;
+
+        } // End of the UploadSpinImages method
 
         /// <summary>
         /// Delete images by id

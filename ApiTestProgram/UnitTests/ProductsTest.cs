@@ -429,7 +429,7 @@ namespace ApiTestProgram
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
             // Get posts
-            List<string> images = await Product.GetImagesById(connection, 2, 1);
+            List<string> images = await Product.GetImagesById(connection, 1, 1);
 
             // Dispose of the connection
             connection.Dispose();
@@ -514,6 +514,28 @@ namespace ApiTestProgram
             Assert.AreEqual(true, response.is_success, response.status_code + " - " + response.reason_phrase + " - " + response.message);
 
         } // End of the TestUploadOtherImages method
+
+        [TestMethod]
+        public async Task TestUploadSpinImages()
+        {
+            // Create the connection
+            ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
+
+            // Create the list with images
+            List<string> imageUrls = new List<string>(2);
+            imageUrls.Add("d:\\Bilder\\1960.jpg");
+            imageUrls.Add("d:\\Bilder\\1970.jpg");
+
+            // Delete the master post
+            ResponseMessage response = await Product.UploadSpinImages(connection, 9, 0, imageUrls);
+
+            // Dispose of the connection
+            connection.Dispose();
+
+            // Test the method call
+            Assert.AreEqual(true, response.is_success, response.status_code + " - " + response.reason_phrase + " - " + response.message);
+
+        } // End of the TestUploadSpinImages method
 
         [TestMethod]
         public async Task TestDeleteImagesById()

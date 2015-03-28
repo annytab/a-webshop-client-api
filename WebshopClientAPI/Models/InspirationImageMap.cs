@@ -11,39 +11,35 @@ using System.Net.Http.Headers;
 namespace Annytab.WebshopClientAPI
 {
     /// <summary>
-    /// This class represent a campaign
+    /// This class represent a image map for a category
     /// </summary>
-    public class Campaign
+    public class InspirationImageMap
     {
         #region Variables
 
         public Int32 id;
         public Int32 language_id;
         public string name;
-        public string category_name;
         public string image_name;
-        public string link_url;
-        public bool inactive;
-        public Int32 click_count;
+        public string image_map_points;
+        public Int32 category_id;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Create a new campaign with default properties
+        /// Create a new image map with default properties
         /// </summary>
-        public Campaign()
+        public InspirationImageMap()
         {
             // Set values for instance variables
             this.id = 0;
             this.language_id = 0;
             this.name = "";
-            this.category_name = "";
             this.image_name = "";
-            this.link_url = "";
-            this.inactive = false;
-            this.click_count = 0;
+            this.image_map_points = "";
+            this.category_id = 0;
 
         } // End of the constructor
 
@@ -52,15 +48,15 @@ namespace Annytab.WebshopClientAPI
         #region Insert methods
 
         /// <summary>
-        /// Add a campaign
+        /// Add a image map
         /// </summary>
         /// <param name="cn">A reference to the client connection</param>
         /// <param name="post">A reference to the post</param>
         /// <returns>A response message</returns>
-        public async static Task<ResponseMessage> Add(ClientConnection cn, Campaign post)
+        public async static Task<ResponseMessage> Add(ClientConnection cn, InspirationImageMap post)
         {
             // Add the post
-            HttpResponseMessage response = await cn.PostAsJsonAsync<Campaign>("/api/campaigns/add", post);
+            HttpResponseMessage response = await cn.PostAsJsonAsync<InspirationImageMap>("/api/inspiration_image_maps/add", post);
 
             // Create the response message
             ResponseMessage message = new ResponseMessage((Int32)response.StatusCode, response.IsSuccessStatusCode, response.ReasonPhrase, await response.Content.ReadAsStringAsync());
@@ -75,15 +71,15 @@ namespace Annytab.WebshopClientAPI
         #region Update methods
 
         /// <summary>
-        /// Update a campaign
+        /// Update a image map
         /// </summary>
         /// <param name="cn">A reference to the client connection</param>
         /// <param name="post">A reference to the post</param>
         /// <returns>A response message</returns>
-        public async static Task<ResponseMessage> Update(ClientConnection cn, Campaign post)
+        public async static Task<ResponseMessage> Update(ClientConnection cn, InspirationImageMap post)
         {
             // Update the post
-            HttpResponseMessage response = await cn.PutAsJsonAsync<Campaign>("/api/campaigns/update", post);
+            HttpResponseMessage response = await cn.PutAsJsonAsync<InspirationImageMap>("/api/inspiration_image_maps/update", post);
 
             // Create the response message
             ResponseMessage message = new ResponseMessage((Int32)response.StatusCode, response.IsSuccessStatusCode, response.ReasonPhrase, await response.Content.ReadAsStringAsync());
@@ -109,7 +105,7 @@ namespace Annytab.WebshopClientAPI
             Int32 count = 0;
 
             // Get the post
-            HttpResponseMessage response = await cn.GetAsync("/api/campaigns/get_count_by_search?keywords=" + keywords);
+            HttpResponseMessage response = await cn.GetAsync("/api/inspiration_image_maps/get_count_by_search?keywords=" + keywords);
 
             // Make sure that the response is successful
             if (response.IsSuccessStatusCode)
@@ -127,23 +123,23 @@ namespace Annytab.WebshopClientAPI
         #region Get methods
 
         /// <summary>
-        /// Get one campaign by id
+        /// Get one image map by id
         /// </summary>
         /// <param name="cn">A reference to a client connection</param>
         /// <param name="id">The id of the post</param>
         /// <returns>A reference to a post, null if nothing is found</returns>
-        public async static Task<Campaign> GetById(ClientConnection cn, Int32 id)
+        public async static Task<InspirationImageMap> GetById(ClientConnection cn, Int32 id)
         {
             // Create the post to return
-            Campaign post = null;
+            InspirationImageMap post = null;
 
             // Get the post
-            HttpResponseMessage response = await cn.GetAsync("/api/campaigns/get_by_id/" + id.ToString());
+            HttpResponseMessage response = await cn.GetAsync("/api/inspiration_image_maps/get_by_id/" + id.ToString());
 
             // Make sure that the response is successful
             if (response.IsSuccessStatusCode)
             {
-                post = await response.Content.ReadAsAsync<Campaign>();
+                post = await response.Content.ReadAsAsync<InspirationImageMap>();
             }
 
             // Return the post
@@ -152,31 +148,58 @@ namespace Annytab.WebshopClientAPI
         } // End of the GetById method
 
         /// <summary>
-        /// Get all campaigns, set the language id to 0 to get all campaigns for all languages
+        /// Get all image maps
         /// </summary>
         /// <param name="cn">A reference to a client connection</param>
-        /// <param name="languageId">The language id</param>
         /// <param name="sortField">The field to sort on</param>
         /// <param name="sortOrder">The sort order, ASC or DESC</param>
         /// <returns>A list with posts</returns>
-        public async static Task<List<Campaign>> GetAll(ClientConnection cn, Int32 languageId, string sortField, string sortOrder)
+        public async static Task<List<InspirationImageMap>> GetAll(ClientConnection cn, string sortField, string sortOrder)
         {
             // Create the list to return
-            List<Campaign> posts = new List<Campaign>();
+            List<InspirationImageMap> posts = new List<InspirationImageMap>();
 
             // Get all posts
-            HttpResponseMessage response = await cn.GetAsync("/api/campaigns/get_all?languageId=" + languageId + "&sortField=" + sortField + "&sortOrder=" + sortOrder);
+            HttpResponseMessage response = await cn.GetAsync("/api/inspiration_image_maps/get_all?sortField=" + sortField + "&sortOrder=" + sortOrder);
 
             // Make sure that the response is successful
             if (response.IsSuccessStatusCode)
             {
-                posts = await response.Content.ReadAsAsync<List<Campaign>>();
+                posts = await response.Content.ReadAsAsync<List<InspirationImageMap>>();
             }
 
             // Return the list
             return posts;
 
         } // End of the GetAll method
+
+        /// <summary>
+        /// Get image maps by category id
+        /// </summary>
+        /// <param name="cn">A reference to a client connection</param>
+        /// <param name="categoryId">The category id</param>
+        /// <param name="languageId">The id of the language</param>
+        /// <param name="sortField">The field to sort on</param>
+        /// <param name="sortOrder">The sort order, ASC or DESC</param>
+        /// <returns>A list with posts</returns>
+        public async static Task<List<InspirationImageMap>> GetByCategoryId(ClientConnection cn, Int32 categoryId, Int32 languageId, string sortField, string sortOrder)
+        {
+            // Create the list to return
+            List<InspirationImageMap> posts = new List<InspirationImageMap>();
+
+            // Get all posts
+            HttpResponseMessage response = await cn.GetAsync("/api/inspiration_image_maps/get_by_category_id/" + categoryId + "?languageId=" + languageId + "&sortField=" + sortField + "&sortOrder=" + sortOrder);
+
+            // Make sure that the response is successful
+            if (response.IsSuccessStatusCode)
+            {
+                posts = await response.Content.ReadAsAsync<List<InspirationImageMap>>();
+            }
+
+            // Return the list
+            return posts;
+
+        } // End of the GetByCategoryId method
 
         /// <summary>
         /// Get posts by a search
@@ -188,20 +211,20 @@ namespace Annytab.WebshopClientAPI
         /// <param name="sortField">The field to sort on</param>
         /// <param name="sortOrder">The sort order, ASC or DESC</param>
         /// <returns>A list with posts</returns>
-        public async static Task<List<Campaign>> GetBySearch(ClientConnection cn, string keywords, Int32 pageSize, Int32 pageNumber,
+        public async static Task<List<InspirationImageMap>> GetBySearch(ClientConnection cn, string keywords, Int32 pageSize, Int32 pageNumber,
             string sortField, string sortOrder)
         {
             // Create the list to return
-            List<Campaign> posts = new List<Campaign>();
+            List<InspirationImageMap> posts = new List<InspirationImageMap>();
 
             // Get all posts
-            HttpResponseMessage response = await cn.GetAsync("/api/campaigns/get_by_search?keywords=" + keywords + "&pageSize="
+            HttpResponseMessage response = await cn.GetAsync("/api/inspiration_image_maps/get_by_search?keywords=" + keywords + "&pageSize="
                 + pageSize + "&pageNumber=" + pageNumber + "&sortField=" + sortField + "&sortOrder=" + sortOrder);
 
             // Make sure that the response is successful
             if (response.IsSuccessStatusCode)
             {
-                posts = await response.Content.ReadAsAsync<List<Campaign>>();
+                posts = await response.Content.ReadAsAsync<List<InspirationImageMap>>();
             }
 
             // Return the list
@@ -209,20 +232,69 @@ namespace Annytab.WebshopClientAPI
 
         } // End of the GetBySearch method
 
+        /// <summary>
+        /// Get the image url for a image map
+        /// </summary>
+        /// <param name="cn">A reference to a client connection</param>
+        /// <param name="id">The id of the post</param>
+        /// <returns>A image url</returns>
+        public async static Task<string> GetImageById(ClientConnection cn, Int32 id)
+        {
+            // Create the string to return
+            string url = "";
+
+            // Get the post
+            HttpResponseMessage response = await cn.GetAsync("/api/inspiration_image_maps/get_image_by_id/" + id.ToString());
+
+            // Make sure that the response is successful
+            if (response.IsSuccessStatusCode)
+            {
+                url = await response.Content.ReadAsAsync<string>();
+            }
+
+            // Return the post
+            return url;
+
+        } // End of the GetImagesById method
+
+        /// <summary>
+        /// Get all image urls
+        /// </summary>
+        /// <param name="cn">A reference to a client connection</param>
+        /// <returns>A dictionary with image urls</returns>
+        public async static Task<Dictionary<Int32, string>> GetAllImages(ClientConnection cn)
+        {
+            // Create the dictionary to return
+            Dictionary<Int32, string> posts = new Dictionary<Int32, string>(0);
+
+            // Get the post
+            HttpResponseMessage response = await cn.GetAsync("/api/inspiration_image_maps/get_all_images");
+
+            // Make sure that the response is successful
+            if (response.IsSuccessStatusCode)
+            {
+                posts = await response.Content.ReadAsAsync<Dictionary<Int32, string>>();
+            }
+
+            // Return the dictionary
+            return posts;
+
+        } // End of the GetAllImages method
+
         #endregion
 
         #region Delete methods
 
         /// <summary>
-        /// Delete a campaign
+        /// Delete a image map
         /// </summary>
         /// <param name="cn">A reference to the client connection</param>
-        /// <param name="id">The id</param>
+        /// <param name="id">The id of the post</param>
         /// <returns>A response message</returns>
         public async static Task<ResponseMessage> Delete(ClientConnection cn, Int32 id)
         {
             // Delete the post
-            HttpResponseMessage response = await cn.DeleteAsync("/api/campaigns/delete/" + id.ToString());
+            HttpResponseMessage response = await cn.DeleteAsync("/api/inspiration_image_maps/delete/" + id.ToString());
 
             // Create the response message
             ResponseMessage message = new ResponseMessage((Int32)response.StatusCode, response.IsSuccessStatusCode, response.ReasonPhrase, await response.Content.ReadAsStringAsync());
@@ -237,29 +309,27 @@ namespace Annytab.WebshopClientAPI
         #region Images
 
         /// <summary>
-        /// Upload campaign images
+        /// Upload a inspiration image
         /// </summary>
         /// <param name="cn">A reference to the client connection</param>
-        /// <param name="images">A list with image file paths</param>
+        /// <param name="id">The id of the image map</param>
+        /// <param name="imageUrl">The image url as a string</param>
         /// <returns>A response message</returns>
-        public async static Task<ResponseMessage> UploadImages(ClientConnection cn, List<string> images)
+        public async static Task<ResponseMessage> UploadImage(ClientConnection cn, Int32 id, string imageUrl)
         {
             // Create the message and the content
             HttpRequestMessage requestMessage = new HttpRequestMessage();
             MultipartFormDataContent content = new MultipartFormDataContent();
 
-            // Loop the list of image urls
-            foreach (string file in images)
-            {
-                FileStream filestream = new FileStream(file, FileMode.Open);
-                string fileName = System.IO.Path.GetFileName(file);
-                content.Add(new StreamContent(filestream), "file", fileName);
-            }
+            // Add the file
+            FileStream filestream = new FileStream(imageUrl, FileMode.Open);
+            string fileName = System.IO.Path.GetFileName(imageUrl);
+            content.Add(new StreamContent(filestream), "file", fileName);
 
             // Set data for the message
             requestMessage.Method = HttpMethod.Post;
             requestMessage.Content = content;
-            requestMessage.RequestUri = new Uri(cn.BaseAddress + "/api/campaigns/upload_images");
+            requestMessage.RequestUri = new Uri(cn.BaseAddress + "/api/inspiration_image_maps/upload_image/" + id.ToString());
 
             // Send the message
             HttpResponseMessage response = await cn.SendAsync(requestMessage);
@@ -270,18 +340,18 @@ namespace Annytab.WebshopClientAPI
             // Return the response message
             return message;
 
-        } // End of the UploadImages method
+        } // End of the UploadImage method
 
         /// <summary>
-        /// Delete a campaign image
+        /// Delete a inspiration image
         /// </summary>
         /// <param name="cn">A reference to the client connection</param>
-        /// <param name="name">The image name including the extension</param>
+        /// <param name="id">The id for the image map</param>
         /// <returns>A response message</returns>
-        public async static Task<ResponseMessage> DeleteImage(ClientConnection cn, string name)
+        public async static Task<ResponseMessage> DeleteImage(ClientConnection cn, Int32 id)
         {
             // Delete the image
-            HttpResponseMessage response = await cn.DeleteAsync("/api/campaigns/delete_image?name=" + name);
+            HttpResponseMessage response = await cn.DeleteAsync("/api/inspiration_image_maps/delete_image/" + id.ToString());
 
             // Create the response message
             ResponseMessage message = new ResponseMessage((Int32)response.StatusCode, response.IsSuccessStatusCode, response.ReasonPhrase, await response.Content.ReadAsStringAsync());
@@ -290,24 +360,6 @@ namespace Annytab.WebshopClientAPI
             return message;
 
         } // End of the DeleteImage method
-
-        /// <summary>
-        /// Delete all images
-        /// </summary>
-        /// <param name="cn">A reference to the client connection</param>
-        /// <returns>A response message</returns>
-        public async static Task<ResponseMessage> DeleteAllImages(ClientConnection cn)
-        {
-            // Delete the image
-            HttpResponseMessage response = await cn.DeleteAsync("/api/campaigns/delete_all_images");
-
-            // Create the response message
-            ResponseMessage message = new ResponseMessage((Int32)response.StatusCode, response.IsSuccessStatusCode, response.ReasonPhrase, await response.Content.ReadAsStringAsync());
-
-            // Return the response message
-            return message;
-
-        } // End of the DeleteAllImages method
 
         #endregion
 
