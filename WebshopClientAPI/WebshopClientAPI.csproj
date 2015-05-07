@@ -70,6 +70,8 @@
     <Compile Include="Models\CustomTheme.cs" />
     <Compile Include="Models\CustomThemeTemplate.cs" />
     <Compile Include="Models\DiscountCode.cs" />
+    <Compile Include="Models\OrderGiftCard.cs" />
+    <Compile Include="Models\GiftCard.cs" />
     <Compile Include="Models\InspirationImageMap.cs" />
     <Compile Include="Networking\CustomerConnection.cs" />
     <Compile Include="Networking\ClientConnection.cs" />

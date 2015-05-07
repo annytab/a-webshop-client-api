@@ -11,62 +11,33 @@ using System.Net.Http.Headers;
 namespace Annytab.WebshopClientAPI
 {
     /// <summary>
-    /// This class represent a domain
+    /// This class represent a gift card
     /// </summary>
-    public class Domain
+    public class GiftCard
     {
         #region Variables
 
-        public Int32 id;
-        public string webshop_name;
-        public string domain_name;
-        public string web_address;
-        public Int32 country_id;
-        public Int32 front_end_language;
-        public Int32 back_end_language;
-        public string currency;
-        public Int32 company_id;
-        public byte default_display_view;
-        [Obsolete("Is not used anymore.")]
-        public byte mobile_display_view;
-        public Int32 custom_theme_id;
-        public bool prices_includes_vat;
-        public string analytics_tracking_id;
-        public string facebook_app_id;
-        public string facebook_app_secret;
-        public string google_app_id;
-        public string google_app_secret;
-        public bool noindex;
+        public string id;
+        public Int32 language_id;
+        public string currency_code;
+        public decimal amount;
+        public DateTime end_date;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Create a new domain with default properties
+        /// Create a new gift card with default properties
         /// </summary>
-        public Domain()
+        public GiftCard()
         {
             // Set values for instance variables
-            this.id = 0;
-            this.webshop_name = "";
-            this.domain_name = "";
-            this.web_address = "";
-            this.country_id = 0;
-            this.front_end_language = 0;
-            this.back_end_language = 0;
-            this.currency = "";
-            this.company_id = 0;
-            this.default_display_view = 0;
-            this.mobile_display_view = 0;
-            this.custom_theme_id = 0;
-            this.prices_includes_vat = false;
-            this.analytics_tracking_id = "";
-            this.facebook_app_id = "";
-            this.facebook_app_secret = "";
-            this.google_app_id = "";
-            this.google_app_secret = "";
-            this.noindex = false;
+            this.id = "";
+            this.language_id = 0;
+            this.currency_code = "";
+            this.amount = 0;
+            this.end_date = DateTime.Now;
 
         } // End of the constructor
 
@@ -75,16 +46,15 @@ namespace Annytab.WebshopClientAPI
         #region Insert methods
 
         /// <summary>
-        /// Add a domain
+        /// Add a gift card
         /// </summary>
         /// <param name="cn">A reference to the client connection</param>
         /// <param name="post">A reference to the post</param>
-        /// <param name="languageId">The language id</param>
         /// <returns>A response message</returns>
-        public async static Task<ResponseMessage> Add(ClientConnection cn, Domain post)
+        public async static Task<ResponseMessage> Add(ClientConnection cn, GiftCard post)
         {
             // Add the post
-            HttpResponseMessage response = await cn.PostAsJsonAsync<Domain>("/api/domains/add", post);
+            HttpResponseMessage response = await cn.PostAsJsonAsync<GiftCard>("/api/gift_cards/add", post);
 
             // Create the response message
             ResponseMessage message = new ResponseMessage((Int32)response.StatusCode, response.IsSuccessStatusCode, response.ReasonPhrase, await response.Content.ReadAsStringAsync());
@@ -99,15 +69,15 @@ namespace Annytab.WebshopClientAPI
         #region Update methods
 
         /// <summary>
-        /// Update a domain
+        /// Update a gift card
         /// </summary>
         /// <param name="cn">A reference to the client connection</param>
         /// <param name="post">A reference to the post</param>
         /// <returns>A response message</returns>
-        public async static Task<ResponseMessage> Update(ClientConnection cn, Domain post)
+        public async static Task<ResponseMessage> Update(ClientConnection cn, GiftCard post)
         {
             // Update the post
-            HttpResponseMessage response = await cn.PutAsJsonAsync<Domain>("/api/domains/update", post);
+            HttpResponseMessage response = await cn.PutAsJsonAsync<GiftCard>("/api/gift_cards/update", post);
 
             // Create the response message
             ResponseMessage message = new ResponseMessage((Int32)response.StatusCode, response.IsSuccessStatusCode, response.ReasonPhrase, await response.Content.ReadAsStringAsync());
@@ -133,7 +103,7 @@ namespace Annytab.WebshopClientAPI
             Int32 count = 0;
 
             // Get the post
-            HttpResponseMessage response = await cn.GetAsync("/api/domains/get_count_by_search?keywords=" + keywords);
+            HttpResponseMessage response = await cn.GetAsync("/api/gift_cards/get_count_by_search?keywords=" + keywords);
 
             // Make sure that the response is successful
             if (response.IsSuccessStatusCode)
@@ -151,23 +121,23 @@ namespace Annytab.WebshopClientAPI
         #region Get methods
 
         /// <summary>
-        /// Get one domain by id
+        /// Get one gift card by id
         /// </summary>
         /// <param name="cn">A reference to a client connection</param>
         /// <param name="id">The id of the post</param>
         /// <returns>A reference to a post, null if nothing is found</returns>
-        public async static Task<Domain> GetById(ClientConnection cn, Int32 id)
+        public async static Task<GiftCard> GetById(ClientConnection cn, string id)
         {
             // Create the post to return
-            Domain post = null;
+            GiftCard post = null;
 
             // Get the post
-            HttpResponseMessage response = await cn.GetAsync("/api/domains/get_by_id/" + id.ToString());
+            HttpResponseMessage response = await cn.GetAsync("/api/gift_cards/get_by_id/" + id);
 
             // Make sure that the response is successful
             if (response.IsSuccessStatusCode)
             {
-                post = await response.Content.ReadAsAsync<Domain>();
+                post = await response.Content.ReadAsAsync<GiftCard>();
             }
 
             // Return the post
@@ -176,24 +146,24 @@ namespace Annytab.WebshopClientAPI
         } // End of the GetById method
 
         /// <summary>
-        /// Get all domains
+        /// Get all gift cards
         /// </summary>
         /// <param name="cn">A reference to a client connection</param>
         /// <param name="sortField">The field to sort on</param>
-        /// <param name="sortOrder">The sort order, ASC or DESC</param>
+        /// <param name="sortOrder">The sort order, ASC or DESC</param> 
         /// <returns>A list with posts</returns>
-        public async static Task<List<Domain>> GetAll(ClientConnection cn, string sortField, string sortOrder)
+        public async static Task<List<GiftCard>> GetAll(ClientConnection cn, string sortField, string sortOrder)
         {
             // Create the list to return
-            List<Domain> posts = new List<Domain>();
+            List<GiftCard> posts = new List<GiftCard>();
 
             // Get all posts
-            HttpResponseMessage response = await cn.GetAsync("/api/domains/get_all?sortField=" + sortField + "&sortOrder=" + sortOrder);
+            HttpResponseMessage response = await cn.GetAsync("/api/gift_cards/get_all?sortField=" + sortField + "&sortOrder=" + sortOrder);
 
             // Make sure that the response is successful
             if (response.IsSuccessStatusCode)
             {
-                posts = await response.Content.ReadAsAsync<List<Domain>>();
+                posts = await response.Content.ReadAsAsync<List<GiftCard>>();
             }
 
             // Return the list
@@ -211,20 +181,20 @@ namespace Annytab.WebshopClientAPI
         /// <param name="sortField">The field to sort on</param>
         /// <param name="sortOrder">The sort order, ASC or DESC</param>
         /// <returns>A list with posts</returns>
-        public async static Task<List<Domain>> GetBySearch(ClientConnection cn, string keywords, Int32 pageSize, Int32 pageNumber,
+        public async static Task<List<GiftCard>> GetBySearch(ClientConnection cn, string keywords, Int32 pageSize, Int32 pageNumber,
             string sortField, string sortOrder)
         {
             // Create the list to return
-            List<Domain> posts = new List<Domain>();
+            List<GiftCard> posts = new List<GiftCard>();
 
             // Get all posts
-            HttpResponseMessage response = await cn.GetAsync("/api/domains/get_by_search?keywords=" + keywords + "&pageSize="
+            HttpResponseMessage response = await cn.GetAsync("/api/gift_cards/get_by_search?keywords=" + keywords + "&pageSize="
                 + pageSize + "&pageNumber=" + pageNumber + "&sortField=" + sortField + "&sortOrder=" + sortOrder);
 
             // Make sure that the response is successful
             if (response.IsSuccessStatusCode)
             {
-                posts = await response.Content.ReadAsAsync<List<Domain>>();
+                posts = await response.Content.ReadAsAsync<List<GiftCard>>();
             }
 
             // Return the list
@@ -237,15 +207,15 @@ namespace Annytab.WebshopClientAPI
         #region Delete methods
 
         /// <summary>
-        /// Delete a domain
+        /// Delete a gift card
         /// </summary>
         /// <param name="cn">A reference to the client connection</param>
         /// <param name="id">The id</param>
         /// <returns>A response message</returns>
-        public async static Task<ResponseMessage> Delete(ClientConnection cn, Int32 id)
+        public async static Task<ResponseMessage> Delete(ClientConnection cn, string id)
         {
             // Delete the post
-            HttpResponseMessage response = await cn.DeleteAsync("/api/domains/delete/" + id);
+            HttpResponseMessage response = await cn.DeleteAsync("/api/gift_cards/delete/" + id);
 
             // Create the response message
             ResponseMessage message = new ResponseMessage((Int32)response.StatusCode, response.IsSuccessStatusCode, response.ReasonPhrase, await response.Content.ReadAsStringAsync());

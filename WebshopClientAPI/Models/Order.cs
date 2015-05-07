@@ -57,6 +57,7 @@ namespace Annytab.WebshopClientAPI
         public string order_status;
         public DateTime desired_date_of_delivery;
         public string discount_code;
+        public decimal gift_cards_amount;
 
         #endregion
 
@@ -108,6 +109,7 @@ namespace Annytab.WebshopClientAPI
             this.order_status = "";
             this.desired_date_of_delivery = DateTime.Now;
             this.discount_code = "";
+            this.gift_cards_amount = 0;
 
         } // End of the constructor
 
@@ -155,7 +157,7 @@ namespace Annytab.WebshopClientAPI
             // Return the response message
             return message;
 
-        } // End of the Update method method
+        } // End of the Update method
 
         /// <summary>
         /// Set an order as exported
@@ -174,7 +176,30 @@ namespace Annytab.WebshopClientAPI
             // Return the response message
             return message;
 
-        } // End of the Update method method
+        } // End of the SetAsExported method
+
+        /// <summary>
+        /// Update the gift cards amount for an order
+        /// </summary>
+        /// <param name="cn">A reference to the client connection</param>
+        /// <param name="orderId">The order id</param>
+        /// <param name="giftCardsAmount">The gift cards amount</param>
+        /// <returns>A response message</returns>
+        public async static Task<ResponseMessage> UpdateGiftCardsAmount(ClientConnection cn, Int32 orderId, decimal giftCardsAmount)
+        {
+            // Round the gift cards amount
+            giftCardsAmount = Math.Round(giftCardsAmount, 0);
+
+            // Update the post
+            HttpResponseMessage response = await cn.GetAsync("/api/orders/update_gift_cards_amount/" + orderId.ToString() + "?giftCardsAmount=" + giftCardsAmount.ToString());
+
+            // Create the response message
+            ResponseMessage message = new ResponseMessage((Int32)response.StatusCode, response.IsSuccessStatusCode, response.ReasonPhrase, await response.Content.ReadAsStringAsync());
+
+            // Return the response message
+            return message;
+
+        } // End of the UpdateGiftCardsAmount method
 
         #endregion
 

@@ -57,6 +57,7 @@ namespace ApiTestProgram
             order.order_status = "Order status";
             order.desired_date_of_delivery = new DateTime(2015, 2, 3);
             order.discount_code = "TEST";
+            order.gift_cards_amount = 100.66455M;
 
             // Add the post
             ResponseMessage response = await Order.Add(connection, order);
@@ -77,7 +78,7 @@ namespace ApiTestProgram
 
             // Create a new post
             Order order = new Order();
-            order.id = 7;
+            order.id = 59;
             order.document_type = 1;
             order.order_date = DateTime.Now;
             order.company_id = 1;
@@ -117,6 +118,7 @@ namespace ApiTestProgram
             order.order_status = "Order status UPP";
             order.desired_date_of_delivery = new DateTime(2019, 3, 30);
             order.discount_code = "TEST UPP";
+            order.gift_cards_amount = 2000.44444221M;
 
             // Add the post
             ResponseMessage response = await Order.Update(connection, order);
@@ -144,7 +146,24 @@ namespace ApiTestProgram
             // Test the method call
             Assert.AreEqual(true, response.is_success, response.status_code + " - " + response.reason_phrase + " - " + response.message);
 
-        } // End of the TestUpdate method
+        } // End of the TestSetAsExported method
+
+        [TestMethod]
+        public async Task TestUpdateGiftCardsAmount()
+        {
+            // Create the connection
+            ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
+
+            // Add the post
+            ResponseMessage response = await Order.UpdateGiftCardsAmount(connection, 58, 5000.66646465464M);
+
+            // Dispose of the connection
+            connection.Dispose();
+
+            // Test the method call
+            Assert.AreEqual(true, response.is_success, response.status_code + " - " + response.reason_phrase + " - " + response.message);
+
+        } // End of the TestUpdateGiftCardsAmount method
 
         [TestMethod]
         public async Task TestGetCountBySearch()

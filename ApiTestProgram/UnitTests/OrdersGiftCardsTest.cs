@@ -7,7 +7,7 @@ using Annytab.WebshopClientAPI;
 namespace ApiTestProgram
 {
     [TestClass]
-    public class DomainsTest
+    public class OrdersGiftCardsTest
     {
         [TestMethod]
         public async Task TestAdd()
@@ -16,28 +16,13 @@ namespace ApiTestProgram
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
             // Create a new post
-            Domain domain = new Domain();
-            domain.id = 0;
-            domain.webshop_name = "Webshop name";
-            domain.domain_name = "Domain name 2";
-            domain.web_address = "Web address";
-            domain.country_id = 1;
-            domain.front_end_language = 1;
-            domain.back_end_language = 2;
-            domain.currency = "SEK";
-            domain.company_id = 1;
-            domain.default_display_view = 0;
-            domain.custom_theme_id = 0;
-            domain.prices_includes_vat = false;
-            domain.analytics_tracking_id = "Analytics tracking id";
-            domain.facebook_app_id = "FB APP ID";
-            domain.facebook_app_secret = "FB APP SECRET";
-            domain.google_app_id = "GOOGLE APP ID";
-            domain.google_app_secret = "GOOGLE APP SECRET";
-            domain.noindex = false;
+            OrderGiftCard post = new OrderGiftCard();
+            post.order_id = 5;
+            post.gift_card_id = "TEST1";
+            post.amount = 100.5788M;
 
             // Add the post
-            ResponseMessage response = await Domain.Add(connection, domain);
+            ResponseMessage response = await OrderGiftCard.Add(connection, post);
 
             // Dispose of the connection
             connection.Dispose();
@@ -54,28 +39,13 @@ namespace ApiTestProgram
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
             // Create a new post
-            Domain domain = new Domain();
-            domain.id = 6;
-            domain.webshop_name = "Webshop name UPP";
-            domain.domain_name = "Domain naimnnn UPP";
-            domain.web_address = "Web address UPP";
-            domain.country_id = 3;
-            domain.front_end_language = 1;
-            domain.back_end_language = 1;
-            domain.currency = "EUR";
-            domain.company_id = 1;
-            domain.default_display_view = 1;
-            domain.custom_theme_id = 0;
-            domain.prices_includes_vat = true;
-            domain.analytics_tracking_id = "Analytics tracking id UPP";
-            domain.facebook_app_id = "FB APP ID UPP";
-            domain.facebook_app_secret = "FB APP SECRET UPP";
-            domain.google_app_id = "GOOGLE APP ID UPP";
-            domain.google_app_secret = "GOOGLE APP SECRET UPP";
-            domain.noindex = true;
+            OrderGiftCard post = new OrderGiftCard();
+            post.order_id = 5;
+            post.gift_card_id = "TEST1";
+            post.amount = 5000.112222M;
 
             // Add the post
-            ResponseMessage response = await Domain.Update(connection, domain);
+            ResponseMessage response = await OrderGiftCard.Update(connection, post);
 
             // Dispose of the connection
             connection.Dispose();
@@ -86,64 +56,13 @@ namespace ApiTestProgram
         } // End of the TestUpdate method
 
         [TestMethod]
-        public async Task TestGetCountBySearch()
-        {
-            // Create the connection
-            ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
-
-            // Get the count
-            Int32 count = await Domain.GetCountBySearch(connection, "");
-
-            // Dispose of the connection
-            connection.Dispose();
-
-            // Test the method call
-            Assert.AreNotEqual(0, count);
-
-        } // End of the TestGetCountBySearch method
-
-        [TestMethod]
-        public async Task TestGetBySearch()
-        {
-            // Create the connection
-            ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
-
-            // Get posts
-            List<Domain> posts = await Domain.GetBySearch(connection, "", 10, 1, "id", "DESC");
-
-            // Dispose of the connection
-            connection.Dispose();
-
-            // Test the method call
-            Assert.AreNotEqual(0, posts.Count);
-
-        } // End of the TestGetBySearch method
-
-        [TestMethod]
-        public async Task TestGetAll()
-        {
-            // Create the connection
-            ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
-
-            // Get posts
-            List<Domain> domains = await Domain.GetAll(connection, "id", "ASC");
-
-            // Dispose of the connection
-            connection.Dispose();
-
-            // Test the method call
-            Assert.AreNotEqual(0, domains.Count);
-
-        } // End of the TestGetAll method
-
-        [TestMethod]
         public async Task TestGetById()
         {
             // Create the connection
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
             // Get posts
-            Domain post = await Domain.GetById(connection, 2);
+            OrderGiftCard post = await OrderGiftCard.GetById(connection, 5, "TEST1");
 
             // Dispose of the connection
             connection.Dispose();
@@ -154,13 +73,64 @@ namespace ApiTestProgram
         } // End of the TestGetById method
 
         [TestMethod]
+        public async Task TestGetByOrderId()
+        {
+            // Create the connection
+            ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
+
+            // Get posts
+            List<OrderGiftCard> posts = await OrderGiftCard.GetByOrderId(connection, 25, "gift_card_id", "ASC");
+
+            // Dispose of the connection
+            connection.Dispose();
+
+            // Test the method call
+            Assert.AreNotEqual(0, posts.Count);
+
+        } // End of the TestGetByOrderId method
+
+        [TestMethod]
+        public async Task TestGetByGiftCardId()
+        {
+            // Create the connection
+            ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
+
+            // Get posts
+            List<OrderGiftCard> posts = await OrderGiftCard.GetByGiftCardId(connection, "TEST1", "order_id", "ASC");
+
+            // Dispose of the connection
+            connection.Dispose();
+
+            // Test the method call
+            Assert.AreNotEqual(0, posts.Count);
+
+        } // End of the TestGetByGiftCardId method
+
+        [TestMethod]
+        public async Task TestGetAll()
+        {
+            // Create the connection
+            ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
+
+            // Get posts
+            List<OrderGiftCard> posts = await OrderGiftCard.GetAll(connection);
+
+            // Dispose of the connection
+            connection.Dispose();
+
+            // Test the method call
+            Assert.AreNotEqual(0, posts.Count);
+
+        } // End of the TestGetAll method
+
+        [TestMethod]
         public async Task TestDeletePost()
         {
             // Create the connection
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
             // Delete the master post
-            ResponseMessage response = await Domain.Delete(connection, 6);
+            ResponseMessage response = await OrderGiftCard.Delete(connection, 5000, "TEST1");
 
             // Dispose of the connection
             connection.Dispose();
