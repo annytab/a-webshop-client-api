@@ -22,7 +22,7 @@ namespace ApiTestProgram
             imageMap.name = "TEST API";
             imageMap.image_name = "Image name";
             imageMap.image_map_points = "Image map points";
-            imageMap.category_id = 1;
+            imageMap.category_id = 0;
 
             // Add the post
             ResponseMessage response = await InspirationImageMap.Add(connection, imageMap);
@@ -43,12 +43,12 @@ namespace ApiTestProgram
 
             // Create a new post
             InspirationImageMap imageMap = new InspirationImageMap();
-            imageMap.id = 7;
-            imageMap.language_id = 0;
+            imageMap.id = 4;
+            imageMap.language_id = 1;
             imageMap.name = "TEST API UPP";
             imageMap.image_name = "Image name UPP";
             imageMap.image_map_points = "Image map points UPP";
-            imageMap.category_id = 2;
+            imageMap.category_id = 0;
 
             // Add the post
             ResponseMessage response = await InspirationImageMap.Update(connection, imageMap);
@@ -119,7 +119,7 @@ namespace ApiTestProgram
             ClientConnection connection = new ClientConnection("https://localhost:44301", "TestAPI", "test");
 
             // Get posts
-            List<InspirationImageMap> posts = await InspirationImageMap.GetByCategoryId(connection, 2, 1, "id", "ASC");
+            List<InspirationImageMap> posts = await InspirationImageMap.GetByCategoryId(connection, 0, 1, "id", "ASC");
 
             // Dispose of the connection
             connection.Dispose();
