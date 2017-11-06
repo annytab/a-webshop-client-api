@@ -20,7 +20,7 @@ namespace ApiTestProgram
             // Create a new post
             AdditionalService service = new AdditionalService();
             service.id = 0;
-            service.product_code = "TT";
+            service.product_code = "XX";
             service.name = "Test SV";
             service.fee = 5555555555555;
             service.unit_id = 3;
@@ -61,7 +61,7 @@ namespace ApiTestProgram
             service.selected = true;
 
             // Add the post
-            ResponseMessage response = await AdditionalService.Update(connection, service, 1);
+            ResponseMessage response = await AdditionalService.Update(connection, service, 2);
 
             // Dispose of the connection
             connection.Dispose();
